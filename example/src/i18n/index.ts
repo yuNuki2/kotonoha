@@ -33,6 +33,9 @@ export interface Result {
   },
   "signin": {
     "email": {
+      "labe": {
+        "name": string
+      },
       "label": {
         "name": string
       }
@@ -52,7 +55,7 @@ export interface Result {
     "name2": string
   },
   "e": {
-    "name": (params: Prettify<{$status:string} & PluralParams>) => string
+    "name": (params: PluralParams) => string
   },
   "f-f-f-f": {
     "name": string

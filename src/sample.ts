@@ -3,14 +3,14 @@ import path from "node:path";
 import { isJsonObject, isNumber, isString } from "./helper";
 import type { JsonObject, JsonValue } from "./types";
 
-// interface Options {
-// 	input?: string | Record<string, string> | undefined;
-// 	output?: string | undefined;
-// }
+interface Options {
+	input?: string | Record<string, string> | undefined;
+	output?: string | undefined;
+}
 
 const PLURAL_REGEX = /(^.+)#(zero|one|two|few|many|other)$/;
 
-export function main() {
+export function main(options: Options = {}) {
 	const jsonString = readFileSync(path.join(__dirname, "sample.json")).toString();
 	const source: JsonObject = JSON.parse(jsonString);
 	const result: Record<string, unknown> = {};
@@ -46,39 +46,45 @@ export interface Result ${JSON.stringify(
 		).replace(/"@@(.*?)@@"/g, "$1")}`,
 	);
 
-	function setObj(obj: JsonObject, dest: Record<string, unknown>, fullKey?: string) {
-		for (const [key, value] of Object.entries(obj)) {
+	function setObj(source: JsonObject, dest: Record<string, unknown>) {
+		for (const [key, value] of Object.entries(source)) {
 			const paths = key.split(".");
-			setPath(dest, paths, value, fullKey ?? key);
+			setPath(dest, paths, value, key);
 		}
 
 		function setPath(
 			obj: Record<string, any>,
 			paths: string[],
 			value: JsonValue,
-			fullKey?: string,
+			fullKey: string,
 		) {
-			// console.log({ path });
 			for (let i = 0; i < paths.length; i++) {
 				const key = paths[i];
 				if (key === undefined) continue;
-				// console.log({ key });
 				if (i === paths.length - 1) {
 					if (isJsonObject(value)) {
-						obj[key] = {};
-						// console.log(JSON.stringify(value, null, 2));
-						setObj(value, obj[key], `${fullKey}.${key}`);
+						if (!obj[key]) {
+							obj[key] = {};
+						}
+
+						// NOTE: 元の実装
+						// setObj(value, obj[key], key);
+
+						for (const [key2, value2] of Object.entries(value)) {
+							const paths = key2.split(".");
+							setPath(obj[key], paths, value2, `${fullKey}.${key2}`);
+						}
 					} else {
 						// NOTE: 重複キーが存在する場合
-						if (hasPath(result, paths)) {
-							throw new Error(`Duplicated Key Error: ${paths.join(".")}`);
+						if (hasPath(result, fullKey.split("."))) {
+							throw new Error(`Duplicated Key: ${fullKey}`);
 						}
 						// NOTE: 文字列の場合
 						else if (isString(value)) {
 							const matches = Array.from(value.matchAll(/\{([^}]+)\}/g));
 							const match = key.match(PLURAL_REGEX);
 							const plural = match !== null;
-							const entries: Array<readonly [`${string}`, "string"]> = [];
+							const entries: Array<readonly [`$${string}`, "string"]> = [];
 							for (const match of matches) {
 								const key = match[1]?.trim();
 								if (!key || (plural && key === "count")) continue;
@@ -115,7 +121,7 @@ export interface Result ${JSON.stringify(
 							// NOTE: 想定していない型
 						} else {
 							console.log(JSON.stringify(obj, null, 2));
-							throw new Error(`Unsupported Type Error: ${path} is ${typeof value}`);
+							throw new Error(`Unsupported Type: ${fullKey} is ${typeof value}`);
 						}
 					}
 				} else {
@@ -129,10 +135,7 @@ export interface Result ${JSON.stringify(
 	}
 }
 
-export function getPath(
-	obj: Record<string, any>,
-	keys: string[],
-): Record<string, string> | undefined {
+export function getPath(obj: Record<string, any>, keys: string[]): any {
 	return keys.reduce((o, key) => {
 		if (o && key in o) {
 			return o[key];

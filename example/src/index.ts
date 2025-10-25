@@ -1,5 +1,5 @@
 import { getPath } from "../../src/sample";
-import type { PluralParams } from "../../src/types";
+import type { JsonObject, PluralParams } from "../../src/types";
 import type { Result } from "./i18n";
 
 interface Options<K extends keyof Result> {
@@ -29,11 +29,11 @@ function createTranslations<K extends keyof Result>(
 	}
 
 	// const dictionary = fetch(`/${locale}/${namespace}`);
-	const dictionary = {} as any;
+	const dictionary = {} as JsonObject;
 
 	const keys = namespace?.split(".");
 
-	let part: Record<string, string> | undefined = dictionary;
+	let part: JsonObject | undefined = dictionary;
 	if (keys) {
 		// NOTE: namespace で指定した階層までの辞書
 		part = getPath(dictionary, keys);

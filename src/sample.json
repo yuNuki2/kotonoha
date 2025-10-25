@@ -31,8 +31,8 @@
 		"name2": "test"
 	},
 	"e": {
-		"name#zero": "test",
-		"name#two": "{count} items is {status}"
+		"name#zero": "{count} items is {status}",
+		"name#two": "test"
 	},
 	"f-f-f-f": {
 		"name": "test"
