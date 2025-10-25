@@ -1,0 +1,10 @@
+{
+	"signin.email.labe.name": "Sign In",
+	"signin": {
+		"email": {
+			"label": {
+				"name": "true"
+			}
+		}
+	}
+}

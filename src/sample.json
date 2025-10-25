@@ -1,0 +1,115 @@
+{
+	"home": {
+		"home2": {
+			"label": "name",
+			"value": "test"
+		}
+	},
+	"signin.email.labe.name": "Sign In",
+	"signin": {
+		"email": {
+			"label": {
+				"name": "true"
+			}
+		}
+	},
+	"a": {
+		"name": "Hello, {name}"
+	},
+	"b": {
+		"name": 2
+	},
+	"c": {
+		"name": "test, { email }, { subject }, { }"
+	},
+	"d": {
+		"name#zero": "test",
+		"name#one": "test",
+		"name#two": "test",
+		"name#few": "test",
+		"name#many": "test",
+		"name2": "test"
+	},
+	"e": {
+		"name#zero": "test",
+		"name#two": "{count} items is {status}"
+	},
+	"f-f-f-f": {
+		"name": "test"
+	},
+	"g": {
+		"name": "test"
+	},
+	"h": {
+		"name": "test"
+	},
+	"i": {
+		"name": "test"
+	},
+	"j": {
+		"name": "test"
+	},
+	"k": {
+		"name": "test"
+	},
+	"l": {
+		"name": "test"
+	},
+	"m": {
+		"name": "test"
+	},
+	"n": {
+		"name": "test"
+	},
+	"o": {
+		"name": "test"
+	},
+	"p": {
+		"name": "test"
+	},
+	"q": {
+		"name": "test"
+	},
+	"r": {
+		"name": "test"
+	},
+	"s": {
+		"name": "test"
+	},
+	"t": {
+		"name": "test"
+	},
+	"u": {
+		"name": "test"
+	},
+	"v": {
+		"name": "test"
+	},
+	"w": {
+		"name": "test"
+	},
+	"x": {
+		"name": "test"
+	},
+	"y": {
+		"name": "test"
+	},
+	"z": {
+		"name": "test"
+	},
+	"1": {
+		"name": "test"
+	},
+	"2": {
+		"name": "test"
+	},
+	"3": {
+		"name": "test"
+	},
+	"4": {
+		"name": "test"
+	},
+	"5": {
+		"name": "test"
+	}
+}
